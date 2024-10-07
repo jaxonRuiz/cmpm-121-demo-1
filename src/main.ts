@@ -7,6 +7,7 @@ document.title = gameName;
 
 const header = document.createElement("h1");
 const clicker = document.createElement("button");
+const buttonContainer = document.createElement("div");
 const scoreContainer = document.createElement("div");
 
 clicker.innerHTML = "⚾";
@@ -20,5 +21,6 @@ clicker.addEventListener("click", () => {
 });
 
 app.append(header);
-app.append(clicker);
+app.append(buttonContainer);
+buttonContainer.append(clicker);
 app.append(scoreContainer);
