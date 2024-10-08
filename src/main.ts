@@ -17,21 +17,6 @@ const FPSText = document.createElement("p");
 
 clicker.innerHTML = "⚾";
 header.innerHTML = gameName;
-let score: number = 0;
-
-// clicker functionality
-clicker.addEventListener("click", () => {
-  score++;
-});
-
-// requestAnimationFrame(incrementScore);
-requestAnimationFrame(update);
-
-function incrementScore(rate: number = 1) {
-  score += rate * deltaTime() / 1000;
-
-  // requestAnimationFrame(incrementScore);
-}
 
 // assembling page
 app.append(header);
@@ -41,7 +26,10 @@ app.append(scoreContainer);
 scoreContainer.append(scoreText);
 scoreContainer.append(FPSText);
 
-// universal main update loop
+// start main update loop
+requestAnimationFrame(update);
+
+// update loop
 function update() {
   incrementScore();
 
@@ -55,4 +43,17 @@ function update() {
 // returns difference in time since last update
 function deltaTime() {
   return performance.now() - lastTime;
+}
+
+// ========= Game Logic =========
+let score: number = 0;
+
+// clicker functionality
+clicker.addEventListener("click", () => {
+  score++;
+});
+
+// increments score fractionally by a set rate/second
+function incrementScore(rate: number = 1) {
+  score += (rate * deltaTime()) / 1000;
 }
