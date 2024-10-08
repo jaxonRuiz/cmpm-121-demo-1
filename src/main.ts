@@ -10,18 +10,21 @@ document.title = gameName;
 // creating page elements
 const header = document.createElement("h1");
 const clicker = document.createElement("button");
+const autoclickerUpgrade = document.createElement("button");
 const buttonContainer = document.createElement("div");
 const scoreContainer = document.createElement("div");
 const scoreText = document.createElement("p");
 const FPSText = document.createElement("p");
 
 clicker.innerHTML = "⚾";
+autoclickerUpgrade.innerHTML = "Buy autoclicker (10)";
 header.innerHTML = gameName;
 
 // assembling page
 app.append(header);
 app.append(buttonContainer);
 buttonContainer.append(clicker);
+buttonContainer.append(autoclickerUpgrade);
 app.append(scoreContainer);
 scoreContainer.append(scoreText);
 scoreContainer.append(FPSText);
@@ -32,12 +35,23 @@ requestAnimationFrame(update);
 // update loop
 function update() {
   incrementScore();
+  updateText();
+  if (score < 10) autoclickerUpgrade.disabled = true;
+  else autoclickerUpgrade.disabled = false;
 
-  FPS = 1000 / deltaTime(); // 1000ms = 1s
-  scoreText.innerHTML = `Score: ${score.toFixed(3)}`;
-  FPSText.innerHTML = `FPS: ${FPS.toFixed(0)}`;
+  // end update
   lastTime = performance.now();
   requestAnimationFrame(update);
+
+  function updateText() {
+    scoreText.innerHTML = `Score: ${score.toFixed(3)}`;
+    FPS = 1000 / deltaTime(); // 1000ms = 1s
+    FPSText.innerHTML = `FPS: ${FPS.toFixed(0)}`;
+  }
+
+  function incrementScore() {
+    score += (automaticRate * deltaTime()) / 1000;
+  }
 }
 
 // returns difference in time since last update
@@ -47,13 +61,15 @@ function deltaTime() {
 
 // ========= Game Logic =========
 let score: number = 0;
+let automaticRate: number = 0;
 
 // clicker functionality
 clicker.addEventListener("click", () => {
   score++;
 });
 
-// increments score fractionally by a set rate/second
-function incrementScore(rate: number = 1) {
-  score += (rate * deltaTime()) / 1000;
-}
+autoclickerUpgrade.addEventListener("click", () => {
+  score -= 10;
+  autoclickerUpgrade.innerHTML = `Autoclicker lvl ${automaticRate + 1} (10)`;
+  automaticRate++;
+});
