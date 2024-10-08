@@ -17,6 +17,7 @@ const scoreText = document.createElement("p");
 const FPSText = document.createElement("p");
 
 clicker.innerHTML = "⚾";
+autoclickerUpgrade.innerHTML = "Buy autoclicker (10)";
 header.innerHTML = gameName;
 
 // assembling page
