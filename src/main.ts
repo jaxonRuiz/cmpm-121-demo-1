@@ -20,14 +20,16 @@ clicker.addEventListener("click", () => {
   score++;
 });
 
+// automatic score ticker
+setInterval(() => {
+  score++;
+}, 1000);
 
 // assembling page
 app.append(header);
 app.append(buttonContainer);
 buttonContainer.append(clicker);
 app.append(scoreContainer);
-
-
 
 // update function to be called every interval to keep update cycles synced.
 function update() {
