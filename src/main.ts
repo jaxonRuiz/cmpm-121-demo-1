@@ -3,6 +3,7 @@ import "./style.css";
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "boop a doop";
+let lastTime = performance.now();
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -20,10 +21,16 @@ clicker.addEventListener("click", () => {
   score++;
 });
 
-// automatic score ticker
-setInterval(() => {
-  score++;
-}, 1000);
+requestAnimationFrame(incrementScore);
+requestAnimationFrame(updateScore);
+
+function incrementScore() {
+  score += (performance.now() - lastTime) / 1000;
+  // scoreContainer.innerHTML = `Score: ${score}`;
+
+  lastTime = performance.now();
+  requestAnimationFrame(incrementScore);
+}
 
 // assembling page
 app.append(header);
@@ -31,8 +38,7 @@ app.append(buttonContainer);
 buttonContainer.append(clicker);
 app.append(scoreContainer);
 
-// update function to be called every interval to keep update cycles synced.
-function update() {
-  scoreContainer.innerHTML = `Score: ${score}`;
+function updateScore() {
+  scoreContainer.innerHTML = `Score: ${score.toFixed(3)}`;
+  requestAnimationFrame(updateScore);
 }
-setInterval(update, 1000 / 60);
