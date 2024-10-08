@@ -15,12 +15,22 @@ header.innerHTML = gameName;
 scoreContainer.innerHTML = "Score: 0";
 let score: number = 0;
 
+// clicker functionality
 clicker.addEventListener("click", () => {
   score++;
-  scoreContainer.innerHTML = `Score: ${score}`;
 });
 
+
+// assembling page
 app.append(header);
 app.append(buttonContainer);
 buttonContainer.append(clicker);
 app.append(scoreContainer);
+
+
+
+// update function to be called every interval to keep update cycles synced.
+function update() {
+  scoreContainer.innerHTML = `Score: ${score}`;
+}
+setInterval(update, 1000 / 60);
