@@ -62,14 +62,17 @@ function deltaTime() {
 // ========= Game Logic =========
 let score: number = 0;
 let automaticRate: number = 0;
+const autoclickerCost: number = 10;
 
 // clicker functionality
 clicker.addEventListener("click", () => {
   score++;
 });
 
+// autoclicker upgrade button
+autoclickerUpgrade.innerHTML = `Buy autoclicker (${autoclickerCost})`;
 autoclickerUpgrade.addEventListener("click", () => {
-  score -= 10;
-  autoclickerUpgrade.innerHTML = `Autoclicker lvl ${automaticRate + 1} (10)`;
+  score -= autoclickerCost;
+  autoclickerUpgrade.innerHTML = `Autoclicker lvl ${automaticRate + 1} (${autoclickerCost})`;
   automaticRate++;
 });
