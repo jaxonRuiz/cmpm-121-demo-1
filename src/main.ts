@@ -7,6 +7,7 @@ let lastTime = performance.now();
 let FPS: number;
 document.title = gameName;
 
+// creating page elements
 const header = document.createElement("h1");
 const clicker = document.createElement("button");
 const buttonContainer = document.createElement("div");
@@ -23,15 +24,13 @@ clicker.addEventListener("click", () => {
   score++;
 });
 
-requestAnimationFrame(incrementScore);
-requestAnimationFrame(updateScore);
+// requestAnimationFrame(incrementScore);
+requestAnimationFrame(update);
 
-function incrementScore() {
-  score += (performance.now() - lastTime) / 1000;
-  FPS = 1000 / (performance.now() - lastTime);
+function incrementScore(rate: number = 1) {
+  score += rate * deltaTime() / 1000;
 
-  lastTime = performance.now();
-  requestAnimationFrame(incrementScore);
+  // requestAnimationFrame(incrementScore);
 }
 
 // assembling page
@@ -42,8 +41,18 @@ app.append(scoreContainer);
 scoreContainer.append(scoreText);
 scoreContainer.append(FPSText);
 
-function updateScore() {
+// universal main update loop
+function update() {
+  incrementScore();
+
+  FPS = 1000 / deltaTime(); // 1000ms = 1s
   scoreText.innerHTML = `Score: ${score.toFixed(3)}`;
   FPSText.innerHTML = `FPS: ${FPS.toFixed(0)}`;
-  requestAnimationFrame(updateScore);
+  lastTime = performance.now();
+  requestAnimationFrame(update);
+}
+
+// returns difference in time since last update
+function deltaTime() {
+  return performance.now() - lastTime;
 }
