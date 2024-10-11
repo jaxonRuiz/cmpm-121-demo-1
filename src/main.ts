@@ -114,7 +114,7 @@ upgradeC.addEventListener("click", () => {
   total_rate += upgradeC_rate;
 });
 
-// clicker functionality 
+// clicker functionality
 clicker.addEventListener("click", () => {
   score++;
 });
