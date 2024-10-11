@@ -84,33 +84,65 @@ const upgradeC_cost: number = 1000;
 const upgradeA_rate: number = 0.1;
 const upgradeB_rate: number = 2;
 const upgradeC_rate: number = 50;
-const upgradeA_level: number = 0;
-const upgradeB_level: number = 0;
-const upgradeC_level: number = 0;
+let upgradeA_level: number = 0;
+let upgradeB_level: number = 0;
+let upgradeC_level: number = 0;
 
 upgradeA.innerHTML = `Buy upgradeA (${upgradeA_cost})`;
 upgradeB.innerHTML = `Buy upgradeB (${upgradeB_cost})`;
 upgradeC.innerHTML = `Buy upgradeC (${upgradeC_cost})`;
 
-init_upgrade(upgradeA, upgradeA_cost, upgradeA_rate, upgradeA_level);
-init_upgrade(upgradeB, upgradeB_cost, upgradeB_rate, upgradeB_level);
-init_upgrade(upgradeC, upgradeC_cost, upgradeC_rate, upgradeC_level);
+
+// i know this is really bad, but i need to be on step 9 to fix. I will fix later.
+upgradeA.addEventListener("click", () => {
+  score -= upgradeA_cost;
+  upgradeA.innerHTML = `Autoclicker lvl ${upgradeA_level + 1} (${upgradeA_cost})`;
+  upgradeA_level++;
+  total_rate += upgradeA_rate;
+});
+
+upgradeB.addEventListener("click", () => {
+  score -= upgradeB_cost;
+  upgradeB.innerHTML = `Autoclicker lvl ${upgradeB_level + 1} (${upgradeB_cost})`;
+  upgradeB_level++;
+  total_rate += upgradeB_rate;
+});
+
+upgradeC.addEventListener("click", () => {
+  score -= upgradeA_cost;
+  upgradeC.innerHTML = `Autoclicker lvl ${upgradeC_level + 1} (${upgradeC_cost})`;
+  upgradeC_level++;
+  total_rate += upgradeC_rate;
+});
+
 
 // clicker functionality
 clicker.addEventListener("click", () => {
   score++;
 });
 
-function init_upgrade(
-  button: HTMLButtonElement,
-  cost: number,
-  rate: number,
-  level: number,
-) {
-  button.addEventListener("click", () => {
-    score -= cost;
-    button.innerHTML = `Autoclicker lvl ${level + 1} (${cost})`;
+// level counting wasnt working, changing it would step too much into step 9. Ill fix later.
+// function init_upgrade(
+//   button: HTMLButtonElement,
+//   cost: number,
+//   rate: number,
+//   level: number,
+// ) {
+//   button.addEventListener("click", () => {
+//     score -= cost;
+//     button.innerHTML = `Autoclicker lvl ${level + 1} (${cost})`;
 
-    total_rate += rate;
-  });
-}
+//     total_rate += rate;
+//   });
+// }
+
+// init_upgrade(upgradeA, upgradeA_cost, upgradeA_rate, upgradeA_level);
+// init_upgrade(upgradeB, upgradeB_cost, upgradeB_rate, upgradeB_level);
+// init_upgrade(upgradeC, upgradeC_cost, upgradeC_rate, upgradeC_level);
+
+// quick cheat code
+window.addEventListener("keydown", (e) => {
+  if (e.key === "e") {
+    score += 1000;
+  }
+});
