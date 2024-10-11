@@ -49,12 +49,10 @@ function update() {
 
   function buttonConditions() {
     // maybe could be done better with event target or something??
-    if (score < volunteer_cost) volunteer_button.disabled = true;
-    else volunteer_button.disabled = false;
-    if (score < intern_cost) intern_button.disabled = true;
-    else intern_button.disabled = false;
-    if (score < worker_cost) worker_button.disabled = true;
-    else worker_button.disabled = false;
+    autocollectors.forEach((collector) => {
+      if (score < collector.cost) collector.button.disabled = true;
+      else collector.button.disabled = false;
+    });
   }
 
   function updateText() {
@@ -78,68 +76,60 @@ function deltaTime() {
 let score: number = 0;
 const universal_price_multiplier: number = 1.15;
 let total_rate: number = 0;
-let volunteer_cost: number = 10;
-let intern_cost: number = 100;
-let worker_cost: number = 1000;
-const volunteer_rate: number = 0.1;
-const intern_rate: number = 2;
-const worker_rate: number = 50;
-let volunteer_quantity: number = 0;
-let intern_quantity: number = 0;
-let worker_quantity: number = 0;
 
-volunteer_button.innerHTML = `Get Volunteer (${volunteer_cost})`;
-intern_button.innerHTML = `Obtain Intern (${intern_cost})`;
-worker_button.innerHTML = `Hire Worker (${worker_cost})`;
+interface autocollector {
+  name: string;
+  verb: string;
+  cost: number;
+  rate: number;
+  quantity: number;
+  button: HTMLButtonElement;
+}
 
-// i know this is really bad, but i need to be on step 9 to fix. I will fix later.
-volunteer_button.addEventListener("click", () => {
-  score -= volunteer_cost;
-  volunteer_button.innerHTML = `Number of Volunteers: ${volunteer_quantity + 1} (${volunteer_cost.toFixed(0)})`;
-  volunteer_cost *= universal_price_multiplier;
-  volunteer_quantity++;
-  total_rate += volunteer_rate;
-});
-
-intern_button.addEventListener("click", () => {
-  score -= intern_cost;
-  intern_button.innerHTML = `Number of Interns: ${intern_quantity + 1} (${intern_cost.toFixed(0)})`;
-  intern_cost *= universal_price_multiplier;
-  intern_quantity++;
-  total_rate += intern_rate;
-});
-
-worker_button.addEventListener("click", () => {
-  score -= volunteer_cost;
-  worker_button.innerHTML = `Number of Workers: ${worker_quantity + 1} (${worker_cost.toFixed(0)})`;
-  worker_cost *= universal_price_multiplier;
-  worker_quantity++;
-  total_rate += worker_rate;
-});
+const autocollectors: autocollector[] = [
+  {
+    name: "Volunteer",
+    verb: "convince",
+    cost: 10,
+    rate: 0.1,
+    quantity: 0,
+    button: volunteer_button,
+  },
+  {
+    name: "Intern",
+    verb: "incentivize",
+    cost: 100,
+    rate: 2,
+    quantity: 0,
+    button: intern_button,
+  },
+  {
+    name: "Worker",
+    verb: "hire",
+    cost: 1000,
+    rate: 50,
+    quantity: 0,
+    button: worker_button,
+  },
+];
 
 // clicker functionality
 clicker.addEventListener("click", () => {
   score++;
 });
 
-// level counting wasnt working, changing it would step too much into step 9. Ill fix later.
-// function init_upgrade(
-//   button: HTMLButtonElement,
-//   cost: number,
-//   rate: number,
-//   level: number,
-// ) {
-//   button.addEventListener("click", () => {
-//     score -= cost;
-//     button.innerHTML = `Autoclicker lvl ${level + 1} (${cost})`;
+// initializing collector upgrades
+autocollectors.forEach((collector) => {
+  collector.button.innerHTML = `${collector.verb} ${collector.name} (${collector.cost.toFixed(0)})`;
 
-//     total_rate += rate;
-//   });
-// }
-
-// init_upgrade(upgradeA, upgradeA_cost, upgradeA_rate, upgradeA_level);
-// init_upgrade(upgradeB, upgradeB_cost, upgradeB_rate, upgradeB_level);
-// init_upgrade(upgradeC, upgradeC_cost, upgradeC_rate, upgradeC_level);
+  collector.button.addEventListener("click", () => {
+    score -= collector.cost;
+    collector.quantity++;
+    collector.cost *= universal_price_multiplier;
+    total_rate += collector.rate;
+    collector.button.innerHTML = `${collector.verb} ${collector.name}: (${collector.cost.toFixed(0)})`;
+  });
+});
 
 // quick cheat code
 window.addEventListener("keydown", (e) => {
