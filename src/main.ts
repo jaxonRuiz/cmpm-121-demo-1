@@ -77,10 +77,11 @@ function deltaTime() {
 
 // ========= Game Logic =========
 let score: number = 0;
+const universal_price_multiplier: number = 1.15;
 let total_rate: number = 0;
-const upgradeA_cost: number = 10;
-const upgradeB_cost: number = 100;
-const upgradeC_cost: number = 1000;
+let upgradeA_cost: number = 10;
+let upgradeB_cost: number = 100;
+let upgradeC_cost: number = 1000;
 const upgradeA_rate: number = 0.1;
 const upgradeB_rate: number = 2;
 const upgradeC_rate: number = 50;
@@ -95,21 +96,24 @@ upgradeC.innerHTML = `Buy upgradeC (${upgradeC_cost})`;
 // i know this is really bad, but i need to be on step 9 to fix. I will fix later.
 upgradeA.addEventListener("click", () => {
   score -= upgradeA_cost;
-  upgradeA.innerHTML = `Autoclicker lvl ${upgradeA_level + 1} (${upgradeA_cost})`;
+  upgradeA.innerHTML = `Autoclicker lvl ${upgradeA_level + 1} (${upgradeA_cost.toFixed(0)})`;
+  upgradeA_cost *= universal_price_multiplier;
   upgradeA_level++;
   total_rate += upgradeA_rate;
 });
 
 upgradeB.addEventListener("click", () => {
   score -= upgradeB_cost;
-  upgradeB.innerHTML = `Autoclicker lvl ${upgradeB_level + 1} (${upgradeB_cost})`;
+  upgradeB.innerHTML = `Autoclicker lvl ${upgradeB_level + 1} (${upgradeB_cost.toFixed(0)})`;
+  upgradeB_cost *= universal_price_multiplier;
   upgradeB_level++;
   total_rate += upgradeB_rate;
 });
 
 upgradeC.addEventListener("click", () => {
   score -= upgradeA_cost;
-  upgradeC.innerHTML = `Autoclicker lvl ${upgradeC_level + 1} (${upgradeC_cost})`;
+  upgradeC.innerHTML = `Autoclicker lvl ${upgradeC_level + 1} (${upgradeC_cost.toFixed(0)})`;
+  upgradeC_cost *= universal_price_multiplier;
   upgradeC_level++;
   total_rate += upgradeC_rate;
 });
