@@ -10,24 +10,30 @@ document.title = gameName;
 // creating page elements
 const header = document.createElement("h1");
 const clicker = document.createElement("button");
-const autoclickerUpgrade = document.createElement("button");
+const upgradeA = document.createElement("button");
+const upgradeB = document.createElement("button");
+const upgradeC = document.createElement("button");
 const buttonContainer = document.createElement("div");
-const scoreContainer = document.createElement("div");
+const textContainer = document.createElement("div");
 const scoreText = document.createElement("p");
+const rateText = document.createElement("p");
 const FPSText = document.createElement("p");
 
 clicker.innerHTML = "⚾";
-autoclickerUpgrade.innerHTML = "Buy autoclicker (10)";
+upgradeA.innerHTML = "Buy autoclicker (10)";
 header.innerHTML = gameName;
 
 // assembling page
 app.append(header);
 app.append(buttonContainer);
 buttonContainer.append(clicker);
-buttonContainer.append(autoclickerUpgrade);
-app.append(scoreContainer);
-scoreContainer.append(scoreText);
-scoreContainer.append(FPSText);
+buttonContainer.append(upgradeA);
+buttonContainer.append(upgradeB);
+buttonContainer.append(upgradeC);
+app.append(textContainer);
+textContainer.append(scoreText);
+textContainer.append(rateText);
+textContainer.append(FPSText);
 
 // start main update loop
 requestAnimationFrame(update);
@@ -36,12 +42,21 @@ requestAnimationFrame(update);
 function update() {
   incrementScore();
   updateText();
-  if (score < 10) autoclickerUpgrade.disabled = true;
-  else autoclickerUpgrade.disabled = false;
+  buttonConditions();
 
   // end update
   lastTime = performance.now();
   requestAnimationFrame(update);
+
+  function buttonConditions() {
+    // maybe could be done better with event target or something??
+    if (score < upgradeA_cost) upgradeA.disabled = true;
+    else upgradeA.disabled = false;
+    if (score < upgradeB_cost) upgradeB.disabled = true;
+    else upgradeB.disabled = false;
+    if (score < upgradeC_cost) upgradeC.disabled = true;
+    else upgradeC.disabled = false;
+  }
 
   function updateText() {
     scoreText.innerHTML = `Score: ${score.toFixed(3)}`;
@@ -50,7 +65,7 @@ function update() {
   }
 
   function incrementScore() {
-    score += (automaticRate * deltaTime()) / 1000;
+    score += (total_rate * deltaTime()) / 1000;
   }
 }
 
@@ -61,18 +76,37 @@ function deltaTime() {
 
 // ========= Game Logic =========
 let score: number = 0;
-let automaticRate: number = 0;
-const autoclickerCost: number = 10;
+let total_rate: number = 0;
+const upgradeA_cost: number = 10;
+const upgradeB_cost: number = 100;
+const upgradeC_cost: number = 1000;
+const upgradeA_rate: number = 0.1;
+const upgradeB_rate: number = 2;
+const upgradeC_rate: number = 50;
+const upgradeA_level: number = 0;
+const upgradeB_level: number = 0;
+const upgradeC_level: number = 0;
+
+upgradeA.innerHTML = `Buy upgradeA (${upgradeA_cost})`;
+upgradeB.innerHTML = `Buy upgradeB (${upgradeB_cost})`;
+upgradeC.innerHTML = `Buy upgradeC (${upgradeC_cost})`;
+
+init_upgrade(upgradeA, upgradeA_cost, upgradeA_rate, upgradeA_level);
+init_upgrade(upgradeB, upgradeB_cost, upgradeB_rate, upgradeB_level);
+init_upgrade(upgradeC, upgradeC_cost, upgradeC_rate, upgradeC_level);
 
 // clicker functionality
 clicker.addEventListener("click", () => {
   score++;
 });
 
-// autoclicker upgrade button
-autoclickerUpgrade.innerHTML = `Buy autoclicker (${autoclickerCost})`;
-autoclickerUpgrade.addEventListener("click", () => {
-  score -= autoclickerCost;
-  autoclickerUpgrade.innerHTML = `Autoclicker lvl ${automaticRate + 1} (${autoclickerCost})`;
-  automaticRate++;
-});
+function init_upgrade(button: HTMLButtonElement, cost: number, rate: number, level: number) {
+  button.addEventListener("click", () => {
+    score -= cost;
+    button.innerHTML = `Autoclicker lvl ${level + 1} (${cost})`;
+    
+    total_rate += rate;
+  });
+}
+
+
