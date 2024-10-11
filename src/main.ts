@@ -9,7 +9,7 @@ let lastTime = performance.now();
 let FPS: number;
 document.title = gameName;
 
-// creating page elements
+// ========== HTML Elements ==========
 const header = document.createElement("h1");
 const clicker = document.createElement("button");
 const volunteer_button = document.createElement("button");
@@ -24,9 +24,20 @@ const rateText = document.createElement("p");
 const FPSText = document.createElement("p");
 const descriptionBox = document.createElement("div");
 
+// clicker functionality
 clicker.innerHTML = "Pick up rock";
-descriptionBox.innerHTML = gameDescription;
-header.innerHTML = gameName;
+clicker.addEventListener("click", () => {
+  score++;
+});
+
+clicker.addEventListener("mouseover", () => {
+  descriptionBox.innerHTML =
+    "The ground is rife with rocks, just waiting to be collected. <br> <br>";
+});
+
+clicker.addEventListener("mouseout", () => {
+  descriptionBox.innerHTML = gameDescription;
+});
 
 // assembling page
 app.append(header);
@@ -42,6 +53,13 @@ textContainer.append(scoreText);
 textContainer.append(rateText);
 textContainer.append(FPSText);
 app.append(descriptionBox);
+descriptionBox.innerHTML = gameDescription;
+header.innerHTML = gameName;
+
+// ========= Game Logic =========
+let score: number = 0;
+const universal_price_multiplier: number = 1.15;
+let total_rate: number = 0;
 
 // start main update loop
 requestAnimationFrame(update);
@@ -81,27 +99,7 @@ function deltaTime() {
   return performance.now() - lastTime;
 }
 
-// ========= Game Logic =========
-let score: number = 0;
-const universal_price_multiplier: number = 1.15;
-let total_rate: number = 0;
-
-// clicker functionality
-clicker.addEventListener("click", () => {
-  score++;
-});
-
-clicker.addEventListener("mouseover", () => {
-  descriptionBox.innerHTML =
-    "The ground is rife with rocks, just waiting to be collected. <br> <br>";
-});
-
-clicker.addEventListener("mouseout", () => {
-  descriptionBox.innerHTML = gameDescription;
-});
-
-// ========= Autocollectors =========
-
+// Autocollectors upgrades
 interface autocollector {
   name: string;
   verb: string;
@@ -180,11 +178,4 @@ autocollectors.forEach((collector) => {
   collector.button.addEventListener("mouseout", () => {
     descriptionBox.innerHTML = gameDescription;
   });
-});
-
-// quick cheat code
-window.addEventListener("keydown", (e) => {
-  if (e.key === "e") {
-    score += 1000;
-  }
 });
