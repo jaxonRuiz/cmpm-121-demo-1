@@ -92,7 +92,6 @@ upgradeA.innerHTML = `Buy upgradeA (${upgradeA_cost})`;
 upgradeB.innerHTML = `Buy upgradeB (${upgradeB_cost})`;
 upgradeC.innerHTML = `Buy upgradeC (${upgradeC_cost})`;
 
-
 // i know this is really bad, but i need to be on step 9 to fix. I will fix later.
 upgradeA.addEventListener("click", () => {
   score -= upgradeA_cost;
@@ -114,7 +113,6 @@ upgradeC.addEventListener("click", () => {
   upgradeC_level++;
   total_rate += upgradeC_rate;
 });
-
 
 // clicker functionality
 clicker.addEventListener("click", () => {
