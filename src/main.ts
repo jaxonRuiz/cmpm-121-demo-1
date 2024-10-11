@@ -120,14 +120,14 @@ clicker.addEventListener("click", () => {
 
 // initializing collector upgrades
 autocollectors.forEach((collector) => {
-  collector.button.innerHTML = `${collector.verb} ${collector.name} (${collector.cost.toFixed(0)})`;
+  collector.button.innerHTML = `${collector.verb} ${collector.name} (${collector.cost.toFixed(2)})`;
 
   collector.button.addEventListener("click", () => {
     score -= collector.cost;
     collector.quantity++;
     collector.cost *= universal_price_multiplier;
     total_rate += collector.rate;
-    collector.button.innerHTML = `${collector.verb} ${collector.name}: (${collector.cost.toFixed(0)})`;
+    collector.button.innerHTML = `${collector.verb} ${collector.name}: (${collector.cost.toFixed(2)})`;
   });
 });
 
