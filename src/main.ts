@@ -13,6 +13,8 @@ const clicker = document.createElement("button");
 const volunteer_button = document.createElement("button");
 const intern_button = document.createElement("button");
 const worker_button = document.createElement("button");
+const professional_button = document.createElement("button");
+const sorceror_button = document.createElement("button");
 const buttonContainer = document.createElement("div");
 const textContainer = document.createElement("div");
 const scoreText = document.createElement("p");
@@ -29,6 +31,8 @@ app.append(buttonContainer);
 buttonContainer.append(volunteer_button);
 buttonContainer.append(intern_button);
 buttonContainer.append(worker_button);
+buttonContainer.append(professional_button);
+buttonContainer.append(sorceror_button);
 app.append(textContainer);
 textContainer.append(scoreText);
 textContainer.append(rateText);
@@ -89,7 +93,7 @@ interface autocollector {
 const autocollectors: autocollector[] = [
   {
     name: "Volunteer",
-    verb: "convince",
+    verb: "Convince",
     cost: 10,
     rate: 0.1,
     quantity: 0,
@@ -97,7 +101,7 @@ const autocollectors: autocollector[] = [
   },
   {
     name: "Intern",
-    verb: "incentivize",
+    verb: "Incentivize",
     cost: 100,
     rate: 2,
     quantity: 0,
@@ -105,11 +109,27 @@ const autocollectors: autocollector[] = [
   },
   {
     name: "Worker",
-    verb: "hire",
-    cost: 1000,
-    rate: 50,
+    verb: "Hire",
+    cost: 300,
+    rate: 20,
     quantity: 0,
     button: worker_button,
+  },
+  {
+    name: "Professional",
+    verb: "Convince",
+    cost: 1000,
+    rate: 500,
+    quantity: 0,
+    button: professional_button,
+  },
+  {
+    name: "Sorceror",
+    verb: "Summon",
+    cost: 10000,
+    rate: 1000,
+    quantity: 0,
+    button: sorceror_button,
   },
 ];
 
