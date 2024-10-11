@@ -100,13 +100,16 @@ clicker.addEventListener("click", () => {
   score++;
 });
 
-function init_upgrade(button: HTMLButtonElement, cost: number, rate: number, level: number) {
+function init_upgrade(
+  button: HTMLButtonElement,
+  cost: number,
+  rate: number,
+  level: number,
+) {
   button.addEventListener("click", () => {
     score -= cost;
     button.innerHTML = `Autoclicker lvl ${level + 1} (${cost})`;
-    
+
     total_rate += rate;
   });
 }
-
-
