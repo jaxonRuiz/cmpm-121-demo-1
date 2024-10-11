@@ -3,6 +3,7 @@ import "./style.css";
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Rock Collector Simulator";
+const gameDescription = "You are a rabid rock collector. For reasons known only to yourself, you are solely dedicated to the collection of rocks.";
 let lastTime = performance.now();
 let FPS: number;
 document.title = gameName;
@@ -20,8 +21,10 @@ const textContainer = document.createElement("div");
 const scoreText = document.createElement("p");
 const rateText = document.createElement("p");
 const FPSText = document.createElement("p");
+const descriptionBox = document.createElement("div");
 
 clicker.innerHTML = "Pick up rock";
+descriptionBox.innerHTML = gameDescription;
 header.innerHTML = gameName;
 
 // assembling page
@@ -37,6 +40,7 @@ app.append(textContainer);
 textContainer.append(scoreText);
 textContainer.append(rateText);
 textContainer.append(FPSText);
+app.append(descriptionBox);
 
 // start main update loop
 requestAnimationFrame(update);
@@ -81,6 +85,21 @@ let score: number = 0;
 const universal_price_multiplier: number = 1.15;
 let total_rate: number = 0;
 
+// clicker functionality
+clicker.addEventListener("click", () => {
+  score++;
+});
+
+clicker.addEventListener("mouseover", () => {
+  descriptionBox.innerHTML = "The ground is rife with rocks, just waiting to be collected.";
+});
+
+clicker.addEventListener("mouseout", () => {
+  descriptionBox.innerHTML = gameDescription;
+});
+
+// ========= Autocollectors =========
+
 interface autocollector {
   name: string;
   verb: string;
@@ -88,6 +107,7 @@ interface autocollector {
   rate: number;
   quantity: number;
   button: HTMLButtonElement;
+  description: string;
 }
 
 const autocollectors: autocollector[] = [
@@ -98,6 +118,7 @@ const autocollectors: autocollector[] = [
     rate: 0.1,
     quantity: 0,
     button: volunteer_button,
+    description: `Convince a volunteer to help you in your quest to amass rocks.`
   },
   {
     name: "Intern",
@@ -106,6 +127,7 @@ const autocollectors: autocollector[] = [
     rate: 2,
     quantity: 0,
     button: intern_button,
+    description: `Incentivize an intern with work experience to dedicate more time to finding rocks.`
   },
   {
     name: "Worker",
@@ -114,6 +136,7 @@ const autocollectors: autocollector[] = [
     rate: 20,
     quantity: 0,
     button: worker_button,
+    description: `Hire a dedicated worker to grow your rock collection.`
   },
   {
     name: "Professional",
@@ -122,6 +145,7 @@ const autocollectors: autocollector[] = [
     rate: 500,
     quantity: 0,
     button: professional_button,
+    description: `Find a like-minded individual willing and dedicated to the persuit of small goelogical objects.`
   },
   {
     name: "Sorceror",
@@ -130,13 +154,9 @@ const autocollectors: autocollector[] = [
     rate: 1000,
     quantity: 0,
     button: sorceror_button,
+    description: `Break the laws of equal exchange and summon a being from another realm solely to amass an unreasnoable amount of rocks.`
   },
 ];
-
-// clicker functionality
-clicker.addEventListener("click", () => {
-  score++;
-});
 
 // initializing collector upgrades
 autocollectors.forEach((collector) => {
@@ -148,6 +168,15 @@ autocollectors.forEach((collector) => {
     collector.cost *= universal_price_multiplier;
     total_rate += collector.rate;
     collector.button.innerHTML = `${collector.verb} ${collector.name}: (${collector.cost.toFixed(2)})`;
+    descriptionBox.innerHTML = `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`;
+  });
+
+  collector.button.addEventListener("mouseover", () => {
+    descriptionBox.innerHTML = `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`;
+  });
+
+  collector.button.addEventListener("mouseout", () => {
+    descriptionBox.innerHTML = gameDescription;
   });
 });
 
