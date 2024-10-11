@@ -60,6 +60,7 @@ function update() {
 
   function updateText() {
     scoreText.innerHTML = `Score: ${score.toFixed(3)}`;
+    rateText.innerHTML = `Rate: ${total_rate.toFixed(3)}`;
     FPS = 1000 / deltaTime(); // 1000ms = 1s
     FPSText.innerHTML = `FPS: ${FPS.toFixed(0)}`;
   }
