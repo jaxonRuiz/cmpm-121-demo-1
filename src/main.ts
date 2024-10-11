@@ -3,7 +3,8 @@ import "./style.css";
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Rock Collector Simulator";
-const gameDescription = "You are a rabid rock collector. For reasons known only to yourself, you are solely dedicated to the collection of rocks.";
+const gameDescription =
+  "You are a rabid rock collector. For reasons known only to yourself, you are solely dedicated to the collection of rocks. <br> <br>";
 let lastTime = performance.now();
 let FPS: number;
 document.title = gameName;
@@ -91,7 +92,8 @@ clicker.addEventListener("click", () => {
 });
 
 clicker.addEventListener("mouseover", () => {
-  descriptionBox.innerHTML = "The ground is rife with rocks, just waiting to be collected.";
+  descriptionBox.innerHTML =
+    "The ground is rife with rocks, just waiting to be collected. <br> <br>";
 });
 
 clicker.addEventListener("mouseout", () => {
@@ -118,7 +120,7 @@ const autocollectors: autocollector[] = [
     rate: 0.1,
     quantity: 0,
     button: volunteer_button,
-    description: `Convince a volunteer to help you in your quest to amass rocks.`
+    description: `Convince a volunteer to help you in your quest to amass rocks.`,
   },
   {
     name: "Intern",
@@ -127,7 +129,7 @@ const autocollectors: autocollector[] = [
     rate: 2,
     quantity: 0,
     button: intern_button,
-    description: `Incentivize an intern with work experience to dedicate more time to finding rocks.`
+    description: `Incentivize an intern with work experience to dedicate more time to finding rocks.`,
   },
   {
     name: "Worker",
@@ -136,7 +138,7 @@ const autocollectors: autocollector[] = [
     rate: 20,
     quantity: 0,
     button: worker_button,
-    description: `Hire a dedicated worker to grow your rock collection.`
+    description: `Hire a dedicated worker to grow your rock collection.`,
   },
   {
     name: "Professional",
@@ -145,7 +147,7 @@ const autocollectors: autocollector[] = [
     rate: 500,
     quantity: 0,
     button: professional_button,
-    description: `Find a like-minded individual willing and dedicated to the persuit of small goelogical objects.`
+    description: `Find a like-minded individual willing and dedicated to the persuit of small goelogical objects.`,
   },
   {
     name: "Sorceror",
@@ -154,7 +156,7 @@ const autocollectors: autocollector[] = [
     rate: 1000,
     quantity: 0,
     button: sorceror_button,
-    description: `Break the laws of equal exchange and summon a being from another realm solely to amass an unreasnoable amount of rocks.`
+    description: `Break the laws of equal exchange and summon a being from another realm solely to amass an unreasnoable amount of rocks.`,
   },
 ];
 
