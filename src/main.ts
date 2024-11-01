@@ -12,11 +12,6 @@ document.title = gameName;
 // ========== HTML Elements ==========
 const header = document.createElement("h1");
 const clickerButton = document.createElement("button");
-// const volunteer_button = document.createElement("button");
-// const intern_button = document.createElement("button");
-// const worker_button = document.createElement("button");
-// const professional_button = document.createElement("button");
-// const sorceror_button = document.createElement("button");
 const buttonContainer = document.createElement("div");
 const textContainer = document.createElement("div");
 const scoreText = document.createElement("p");
@@ -37,7 +32,7 @@ clickerButton.addEventListener("mouseover", () => {
 });
 
 clickerButton.addEventListener("mouseout", () => {
-  resetGameDescription();
+  updateGameDescription(gameDescription);
 });
 
 // assembling page
@@ -181,13 +176,9 @@ autocollectors.forEach((collector) => {
   });
 
   collector.button.addEventListener("mouseout", () => {
-    resetGameDescription();
+    updateGameDescription(gameDescription);
   });
 });
-
-function resetGameDescription() {
-  descriptionBox.innerHTML = gameDescription;
-}
 
 function updateGameDescription(text: string) {
   descriptionBox.innerHTML = text;
