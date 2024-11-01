@@ -11,12 +11,12 @@ document.title = gameName;
 
 // ========== HTML Elements ==========
 const header = document.createElement("h1");
-const clicker = document.createElement("button");
-const volunteer_button = document.createElement("button");
-const intern_button = document.createElement("button");
-const worker_button = document.createElement("button");
-const professional_button = document.createElement("button");
-const sorceror_button = document.createElement("button");
+const clickerButton = document.createElement("button");
+// const volunteer_button = document.createElement("button");
+// const intern_button = document.createElement("button");
+// const worker_button = document.createElement("button");
+// const professional_button = document.createElement("button");
+// const sorceror_button = document.createElement("button");
 const buttonContainer = document.createElement("div");
 const textContainer = document.createElement("div");
 const scoreText = document.createElement("p");
@@ -25,29 +25,30 @@ const FPSText = document.createElement("p");
 const descriptionBox = document.createElement("div");
 
 // clicker functionality
-clicker.innerHTML = "Pick up rock";
-clicker.addEventListener("click", () => {
+clickerButton.innerHTML = "Pick up rock";
+clickerButton.addEventListener("click", () => {
   score++;
 });
 
-clicker.addEventListener("mouseover", () => {
-  descriptionBox.innerHTML =
-    "The ground is rife with rocks, just waiting to be collected. <br> <br>";
+clickerButton.addEventListener("mouseover", () => {
+  updateGameDescription(
+    "The ground is rife with rocks, just waiting to be collected. <br> <br>",
+  );
 });
 
-clicker.addEventListener("mouseout", () => {
-  descriptionBox.innerHTML = gameDescription;
+clickerButton.addEventListener("mouseout", () => {
+  resetGameDescription();
 });
 
 // assembling page
 app.append(header);
-app.append(clicker);
+app.append(clickerButton);
 app.append(buttonContainer);
-buttonContainer.append(volunteer_button);
-buttonContainer.append(intern_button);
-buttonContainer.append(worker_button);
-buttonContainer.append(professional_button);
-buttonContainer.append(sorceror_button);
+// buttonContainer.append(volunteer_button);
+// buttonContainer.append(intern_button);
+// buttonContainer.append(worker_button);
+// buttonContainer.append(professional_button);
+// buttonContainer.append(sorceror_button);
 app.append(textContainer);
 textContainer.append(scoreText);
 textContainer.append(rateText);
@@ -117,7 +118,7 @@ const autocollectors: autocollector[] = [
     cost: 10,
     rate: 0.1,
     quantity: 0,
-    button: volunteer_button,
+    button: clickerButton, // using clicker as a placeholder to not be undefined
     description: `Convince a volunteer to help you in your quest to amass rocks.`,
   },
   {
@@ -126,7 +127,7 @@ const autocollectors: autocollector[] = [
     cost: 100,
     rate: 2,
     quantity: 0,
-    button: intern_button,
+    button: clickerButton,
     description: `Incentivize an intern with work experience to dedicate more time to finding rocks.`,
   },
   {
@@ -135,7 +136,7 @@ const autocollectors: autocollector[] = [
     cost: 300,
     rate: 20,
     quantity: 0,
-    button: worker_button,
+    button: clickerButton,
     description: `Hire a dedicated worker to grow your rock collection.`,
   },
   {
@@ -144,7 +145,7 @@ const autocollectors: autocollector[] = [
     cost: 1000,
     rate: 500,
     quantity: 0,
-    button: professional_button,
+    button: clickerButton,
     description: `Find a like-minded individual willing and dedicated to the persuit of small goelogical objects.`,
   },
   {
@@ -153,13 +154,15 @@ const autocollectors: autocollector[] = [
     cost: 10000,
     rate: 1000,
     quantity: 0,
-    button: sorceror_button,
+    button: clickerButton,
     description: `Break the laws of equal exchange and summon a being from another realm solely to amass an unreasnoable amount of rocks.`,
   },
 ];
 
 // initializing collector upgrades
 autocollectors.forEach((collector) => {
+  collector.button = document.createElement("button");
+  buttonContainer.append(collector.button);
   collector.button.innerHTML = `${collector.verb} ${collector.name} (${collector.cost.toFixed(2)})`;
 
   collector.button.addEventListener("click", () => {
@@ -172,10 +175,20 @@ autocollectors.forEach((collector) => {
   });
 
   collector.button.addEventListener("mouseover", () => {
-    descriptionBox.innerHTML = `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`;
+    updateGameDescription(
+      `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`,
+    );
   });
 
   collector.button.addEventListener("mouseout", () => {
-    descriptionBox.innerHTML = gameDescription;
+    resetGameDescription();
   });
 });
+
+function resetGameDescription() {
+  descriptionBox.innerHTML = gameDescription;
+}
+
+function updateGameDescription(text: string) {
+  descriptionBox.innerHTML = text;
+}
