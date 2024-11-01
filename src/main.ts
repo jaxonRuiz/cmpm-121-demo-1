@@ -39,11 +39,6 @@ clickerButton.addEventListener("mouseout", () => {
 app.append(header);
 app.append(clickerButton);
 app.append(buttonContainer);
-// buttonContainer.append(volunteer_button);
-// buttonContainer.append(intern_button);
-// buttonContainer.append(worker_button);
-// buttonContainer.append(professional_button);
-// buttonContainer.append(sorceror_button);
 app.append(textContainer);
 textContainer.append(scoreText);
 textContainer.append(rateText);
