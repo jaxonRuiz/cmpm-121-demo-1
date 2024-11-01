@@ -90,7 +90,7 @@ function deltaTime() {
   return performance.now() - lastTime;
 }
 
-// Autocollectors upgrades
+// ========= Autocollectors upgrades =========
 interface autocollector {
   name: string;
   verb: string;
@@ -149,32 +149,36 @@ const autocollectors: autocollector[] = [
   },
 ];
 
+function upgradeButtonClicked(collector: autocollector) {
+  score -= collector.cost;
+  collector.quantity++;
+  collector.cost *= universal_price_multiplier;
+  total_rate += collector.rate;
+  collector.button.innerHTML = `${collector.verb} ${collector.name}: (${collector.cost.toFixed(2)})`;
+  descriptionBox.innerHTML = `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`;
+}
+
+function updateGameDescription(text: string) {
+  descriptionBox.innerHTML = text;
+}
+
 // initializing collector upgrades
 autocollectors.forEach((collector) => {
   collector.button = document.createElement("button");
   buttonContainer.append(collector.button);
   collector.button.innerHTML = `${collector.verb} ${collector.name} (${collector.cost.toFixed(2)})`;
 
-  collector.button.addEventListener("click", () => {
-    score -= collector.cost;
-    collector.quantity++;
-    collector.cost *= universal_price_multiplier;
-    total_rate += collector.rate;
-    collector.button.innerHTML = `${collector.verb} ${collector.name}: (${collector.cost.toFixed(2)})`;
-    descriptionBox.innerHTML = `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`;
-  });
+  collector.button.addEventListener("click", () =>
+    upgradeButtonClicked(collector),
+  );
 
-  collector.button.addEventListener("mouseover", () => {
+  collector.button.addEventListener("mouseover", () =>
     updateGameDescription(
       `${collector.description} <br> You have: ${collector.quantity} ${collector.name}s`,
-    );
-  });
+    ),
+  );
 
-  collector.button.addEventListener("mouseout", () => {
-    updateGameDescription(gameDescription);
-  });
+  collector.button.addEventListener("mouseout", () =>
+    updateGameDescription(gameDescription),
+  );
 });
-
-function updateGameDescription(text: string) {
-  descriptionBox.innerHTML = text;
-}
