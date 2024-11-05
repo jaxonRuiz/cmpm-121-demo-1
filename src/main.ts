@@ -76,8 +76,13 @@ function update() {
   function buttonConditions() {
     // maybe could be done better with event target or something??
     autocollectors.forEach((collector) => {
-      if (score < collector.cost) collector.button.disabled = true;
-      else collector.button.disabled = false;
+      if (score < collector.cost) {
+        collector.button.disabled = true;
+        collector.button.style.backgroundColor = "#1a1a1a";
+      } else {
+        collector.button.style.backgroundColor = "#878682";
+        collector.button.disabled = false;
+      }
     });
   }
 
