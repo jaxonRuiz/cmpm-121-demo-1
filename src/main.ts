@@ -21,18 +21,26 @@ const descriptionBox = document.createElement("div");
 
 // clicker functionality
 clickerButton.innerHTML = "Pick up rock";
+clickerButton.style.width = "150px";
+clickerButton.style.height = "75px";
 clickerButton.addEventListener("click", () => {
   score++;
+  clickerButton.style.transform = "scale(0.95)";
+  setTimeout(() => {
+    clickerButton.style.transform = "scale(1.05)";
+  }, 100);
 });
 
 clickerButton.addEventListener("mouseover", () => {
   updateGameDescription(
     "The ground is rife with rocks, just waiting to be collected. <br> <br>",
   );
+  clickerButton.style.transform = "scale(1.1)";
 });
 
 clickerButton.addEventListener("mouseout", () => {
   updateGameDescription(gameDescription);
+  clickerButton.style.transform = "scale(1.0)";
 });
 
 // assembling page
